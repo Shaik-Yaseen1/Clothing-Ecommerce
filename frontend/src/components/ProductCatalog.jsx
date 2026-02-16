@@ -20,8 +20,13 @@ const ProductCatalog = ({ onAddToCart, onBuyNow }) => {
             setProducts(data);
             setError(null);
         } catch (err) {
-            setError('Failed to load products. Please make sure the backend server is running.');
-            console.error(err);
+            const errorMsg = err.response
+                ? `Server Error (${err.response.status}): ${err.response.data?.message || 'Failed to fetch'}`
+                : err.request
+                    ? `Network Error: Cannot reach the backend at ${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}. Check if the server is running and HTTPS is used.`
+                    : `Error: ${err.message}`;
+            setError(errorMsg);
+            console.error('Fetch error:', err);
         } finally {
             setLoading(false);
         }
