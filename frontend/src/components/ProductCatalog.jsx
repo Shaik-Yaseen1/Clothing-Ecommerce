@@ -20,11 +20,15 @@ const ProductCatalog = ({ onAddToCart, onBuyNow }) => {
             setProducts(data);
             setError(null);
         } catch (err) {
-            const errorMsg = err.response
+            const currentUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+            let errorMsg = err.response
                 ? `Server Error (${err.response.status}): ${err.response.data?.message || 'Failed to fetch'}`
-                : err.request
-                    ? `Network Error: Cannot reach the backend at ${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}. Check if the server is running and HTTPS is used.`
-                    : `Error: ${err.message}`;
+                : `Network Error: Cannot reach the backend at ${currentUrl}.`;
+
+            if (currentUrl.includes('localhost') && window.location.hostname !== 'localhost') {
+                errorMsg += " (TIP: Your live site is incorrectly trying to connect to 'localhost'. Please set VITE_API_URL in Netlify settings and redeploy.)";
+            }
+
             setError(errorMsg);
             console.error('Fetch error:', err);
         } finally {
