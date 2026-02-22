@@ -3,6 +3,8 @@ import axios from 'axios';
 
 const AuthContext = createContext();
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [token, setToken] = useState(localStorage.getItem('token'));
@@ -19,7 +21,7 @@ export const AuthProvider = ({ children }) => {
 
     const fetchUser = async () => {
         try {
-            const response = await axios.get('http://localhost:5000/api/auth/me');
+            const response = await axios.get(`${API_BASE_URL}/auth/me`);
             setUser(response.data);
         } catch (error) {
             console.error('Failed to fetch user:', error);
@@ -30,7 +32,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     const login = async (email, password) => {
-        const response = await axios.post('http://localhost:5000/api/auth/login', { email, password });
+        const response = await axios.post(`${API_BASE_URL}/auth/login`, { email, password });
         const { token, user: userData } = response.data;
         localStorage.setItem('token', token);
         setToken(token);
@@ -39,7 +41,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     const signup = async (userData) => {
-        const response = await axios.post('http://localhost:5000/api/auth/register', userData);
+        const response = await axios.post(`${API_BASE_URL}/auth/register`, userData);
         const { token, user: newUser } = response.data;
         localStorage.setItem('token', token);
         setToken(token);

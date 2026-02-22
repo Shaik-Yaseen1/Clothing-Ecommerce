@@ -19,7 +19,12 @@ const Login = ({ isOpen, onClose, onSwitchToSignup }) => {
             await login(email, password);
             onClose();
         } catch (err) {
-            setError(err.response?.data?.message || 'Failed to login. Please check your credentials.');
+            console.error('Login error:', err);
+            const detailedError = err.response?.data?.message
+                || err.response?.data?.error
+                || err.message
+                || 'Failed to login. Please check your credentials.';
+            setError(detailedError);
         } finally {
             setLoading(false);
         }

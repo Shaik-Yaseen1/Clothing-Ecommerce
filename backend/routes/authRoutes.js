@@ -8,6 +8,7 @@ const router = express.Router();
 
 // Register new user
 router.post('/register', async (req, res) => {
+    console.log('Register request received:', req.body);
     try {
         const { name, email, password, phone } = req.body;
 
@@ -50,12 +51,14 @@ router.post('/register', async (req, res) => {
             }
         });
     } catch (error) {
+        console.error('Registration error:', error);
         res.status(500).json({ message: 'Error registering user', error: error.message });
     }
 });
 
 // Login user
 router.post('/login', async (req, res) => {
+    console.log('Login request received:', req.body.email);
     try {
         const { email, password } = req.body;
 

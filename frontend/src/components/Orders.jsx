@@ -18,9 +18,10 @@ const Orders = ({ isOpen, onClose }) => {
     }, [isOpen, token]);
 
     const fetchOrders = async () => {
+        const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
         setLoading(true);
         try {
-            const response = await axios.get('http://localhost:5000/api/orders/my/orders');
+            const response = await axios.get(`${API_BASE_URL}/orders/my/orders`);
             setOrders(response.data);
         } catch (error) {
             console.error('Failed to fetch orders:', error);

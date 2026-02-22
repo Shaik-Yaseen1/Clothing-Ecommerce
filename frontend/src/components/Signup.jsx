@@ -27,7 +27,12 @@ const Signup = ({ isOpen, onClose, onSwitchToLogin }) => {
             await signup(formData);
             onClose();
         } catch (err) {
-            setError(err.response?.data?.message || 'Failed to sign up. Please try again.');
+            console.error('Signup error:', err);
+            const detailedError = err.response?.data?.message
+                || err.response?.data?.error
+                || err.message
+                || 'Failed to sign up. Please try again.';
+            setError(detailedError);
         } finally {
             setLoading(false);
         }
