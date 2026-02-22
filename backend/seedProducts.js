@@ -21,7 +21,7 @@ const products = [
         description: 'Elevate your wardrobe with this sophisticated polo. Crafted from premium pique fabric with a modern slim fit. Ideal for smart-casual settings.',
         price: 1299,
         category: 'Premium',
-        image: 'https://images.unsplash.com/photo-1586790170083-2f9ceadc732d?w=500&h=600&fit=crop',
+        image: '/images/premium-polo.jpg',
         sizes: ['S', 'M', 'L', 'XL'],
         colors: ['Navy', 'Burgundy', 'Forest Green', 'Charcoal'],
         stock: 30,
